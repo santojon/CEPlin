@@ -1,4 +1,4 @@
-package br.ufpe.cin.jonas.ceplin.activity
+package br.ufpe.cin.rxcep.ceplin.activity
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,12 +9,9 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
-import br.ufpe.cin.jonas.ceplin.EventManager
-import br.ufpe.cin.jonas.ceplin.R
-import br.ufpe.cin.jonas.ceplin.util.AccelerationEvent
-import br.ufpe.cin.jonas.ceplin.util.LightEvent
-import br.ufpe.cin.jonas.ceplin.util.ProximityEvent
-import br.ufpe.cin.jonas.ceplin.util.TouchEvent
+import br.ufpe.cin.rxcep.ceplin.EventManager
+import br.ufpe.cin.rxcep.ceplin.R
+import br.ufpe.cin.rxcep.ceplin.activity.model.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +28,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var proxSensor: Sensor? = null
 
     private val gestureManager = EventManager<TouchEvent>()
+    private var listManager = EventManager<ListEvent<TouchEvent>>()
 
     private val accManager = EventManager<AccelerationEvent>()
     private val lightManager = EventManager<LightEvent>()
@@ -48,13 +46,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         lightSensor = mSensorManager?.getDefaultSensor(Sensor.TYPE_LIGHT)
         proxSensor = mSensorManager?.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
-
         setHorizontalRule()
+        setListRule()
         //setHorizontalRuleRxOnly()
 
-        setInPocketRule()
+//        setInPocketRule()
         //setInPocketRuleRxOnly()
+    }
 
+    private fun setListRule() {
+        listManager.asStream().orderBy {
+            it.events.map { e -> e.y }.max()!!
+        }.subscribe {
+            log("${it.map { l -> l.events.map { t -> t.y } }}")
+        }
     }
 
     private fun setHorizontalRule() {
@@ -64,6 +69,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }, 5)
                 .subscribe {
                     log("Horizontal gesture")
+                    listManager.addEvent(ListEvent(it))
                 }
     }
 
@@ -77,7 +83,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     if (it.isNotEmpty() && count > 1) {
                         for (i in 1..(it.size - 1)) {
                             if (!(abs(it[i - 1].x - it[i].x) > X
-                                    && abs(it[i - 1].y - it[i].y) < Y)) {
+                                            && abs(it[i - 1].y - it[i].y) < Y)) {
                                 filter = false
                                 break
                             }
@@ -100,7 +106,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         accelerationRule.merge(proximityRule).merge(lightRule).subscribe { log("IN POCKET!") }
     }
 
-
     private val accelerationEvents = PublishSubject.create<AccelerationEvent>()
     private val proximityEvents = PublishSubject.create<ProximityEvent>()
 
@@ -116,11 +121,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     val values = mutableSetOf<Int>()
 
                     for (item in events) {
-                        when(item.getOrNull(0)){
-                            is AccelerationEvent ->{
+                        when (item.getOrNull(0)) {
+                            is AccelerationEvent -> {
                                 values.add(1)
                             }
-                            is ProximityEvent ->{
+                            is ProximityEvent -> {
                                 values.add(2)
                             }
                         }

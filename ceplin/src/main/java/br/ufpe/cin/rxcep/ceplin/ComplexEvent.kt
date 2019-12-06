@@ -1,4 +1,4 @@
-package br.ufpe.cin.jonas.ceplin
+package br.ufpe.cin.rxcep.ceplin
 
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit

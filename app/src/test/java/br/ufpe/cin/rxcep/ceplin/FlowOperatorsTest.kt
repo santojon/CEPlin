@@ -1,7 +1,7 @@
-package br.ufpe.cin.jonas.ceplin
+package br.ufpe.cin.rxcep.ceplin
 
-import br.ufpe.cin.jonas.ceplin.test.EventStreamSimulator
-import br.ufpe.cin.jonas.ceplin.util.IntEvent
+import br.ufpe.cin.rxcep.ceplin.test.EventStreamSimulator
+import br.ufpe.cin.rxcep.ceplin.util.IntEvent
 import org.junit.Test
 
 /**

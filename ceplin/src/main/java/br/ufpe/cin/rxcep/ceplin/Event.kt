@@ -1,4 +1,4 @@
-package br.ufpe.cin.jonas.ceplin
+package br.ufpe.cin.rxcep.ceplin
 
 import java.util.*
 

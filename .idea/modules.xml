@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CEPlin.iml" filepath="$PROJECT_DIR$/CEPlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/CEPlin-app.iml" filepath="$PROJECT_DIR$/app/CEPlin-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ceplin/CEPlin-ceplin.iml" filepath="$PROJECT_DIR$/ceplin/CEPlin-ceplin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ceplin/ceplin.iml" filepath="$PROJECT_DIR$/ceplin/ceplin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projects-CEPlin.iml" filepath="$PROJECT_DIR$/projects-CEPlin.iml" />
     </modules>
   </component>
 </project>

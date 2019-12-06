@@ -1,4 +1,4 @@
-package br.ufpe.cin.jonas.ceplin
+package br.ufpe.cin.rxcep.ceplin
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

@@ -1,6 +1,6 @@
-package br.ufpe.cin.jonas.ceplin.util
+package br.ufpe.cin.rxcep.ceplin.util
 
-import br.ufpe.cin.jonas.ceplin.Event
+import br.ufpe.cin.rxcep.ceplin.Event
 import java.util.*
 
 class IntEvent(val value: Int) : Event, Comparable<IntEvent> {

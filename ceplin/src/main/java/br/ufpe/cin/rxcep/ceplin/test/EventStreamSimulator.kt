@@ -1,8 +1,8 @@
-package br.ufpe.cin.jonas.ceplin.test
+package br.ufpe.cin.rxcep.ceplin.test
 
-import br.ufpe.cin.jonas.ceplin.Event
-import br.ufpe.cin.jonas.ceplin.EventManager
-import br.ufpe.cin.jonas.ceplin.EventStream
+import br.ufpe.cin.rxcep.ceplin.Event
+import br.ufpe.cin.rxcep.ceplin.EventManager
+import br.ufpe.cin.rxcep.ceplin.EventStream
 
 /**
  * Used to simulate Events subscription
