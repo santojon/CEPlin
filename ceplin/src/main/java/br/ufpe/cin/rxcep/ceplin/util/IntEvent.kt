@@ -13,13 +13,13 @@ class IntEvent(val value: Int) : Event, Comparable<IntEvent> {
 
     override fun equals(other: Any?): Boolean {
         if (other is IntEvent) {
-            return this.value == other?.value
+            return this.value == other.value
         }
         return super.equals(other)
     }
 
     override fun hashCode(): Int {
-        return value!!.hashCode()
+        return value.hashCode()
     }
 
     override fun toString(): String {
