@@ -10,25 +10,25 @@ class ComplexEvent(val observable: Observable<Pair<Any?, Int>>,
 
     fun subscribe(onComplete: () -> Unit) {
         this.observable.buffer(timespan, timeUnit, numberOfEvents)
-            .subscribe { bundle ->
+                .subscribe { bundle ->
 
-                val events = bundle.listIterator()
-                val values = mutableSetOf<Int>()
+                    val events = bundle.listIterator()
+                    val values = mutableSetOf<Int>()
 
-                for (item in events) {
-                    values.add(item.second)
+                    for (item in events) {
+                        values.add(item.second)
+                    }
+
+                    if (values.count() == this.numberOfEvents) {
+                        onComplete()
+                    }
                 }
-
-                if (values.count() == this.numberOfEvents) {
-                    onComplete()
-                }
-            }
     }
 
     fun <E> merge(eventStream: EventStream<E>): ComplexEvent {
         val merged = Observable.merge(
-            this.observable,
-            eventStream.observable.map { element -> Pair(element, numberOfEvents + 1) }
+                this.observable,
+                eventStream.observable.map { element -> Pair(element, numberOfEvents + 1) }
         )
 
         return ComplexEvent(merged, numberOfEvents + 1)
