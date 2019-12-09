@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.ufpe.cin.rxcep.ceplin" />
+<manifest package="br.ufpe.cin.rxcep.ceplin" />

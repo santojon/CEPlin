@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 repositories {
     maven {
-        url  "https://dl.bintray.com/rxcep/CEPlin"
+        url "https://dl.bintray.com/rxcep/CEPlin"
     }
 }
 

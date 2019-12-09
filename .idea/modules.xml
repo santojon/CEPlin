@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ceplin/ceplin.iml" filepath="$PROJECT_DIR$/ceplin/ceplin.iml" />
       <module fileurl="file://$PROJECT_DIR$/projects-CEPlin.iml" filepath="$PROJECT_DIR$/projects-CEPlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ceplin/projects-CEPlin-ceplin.iml" filepath="$PROJECT_DIR$/ceplin/projects-CEPlin-ceplin.iml" />
     </modules>
   </component>
 </project>

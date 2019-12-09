@@ -7,8 +7,8 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MotionEvent
+import androidx.appcompat.app.AppCompatActivity
 import br.ufpe.cin.rxcep.ceplin.EventManager
 import br.ufpe.cin.rxcep.ceplin.R
 import br.ufpe.cin.rxcep.ceplin.activity.model.*
