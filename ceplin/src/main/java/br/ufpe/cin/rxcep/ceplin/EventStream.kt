@@ -5,7 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.withLatestFrom
 import java.util.concurrent.TimeUnit
 
-class EventStream<T>(val observable: Observable<T>) {
+class EventStream<T : Any>(val observable: Observable<T>) {
 
     fun subscribe(onNext: ((T) -> Unit)) {
         this.observable.subscribe(onNext)
@@ -23,7 +23,7 @@ class EventStream<T>(val observable: Observable<T>) {
      * The map operator transforms an EventStream by creating
      * a new EventStream through a projection function.
      */
-    fun <R> map(transform: ((T) -> R)): EventStream<R> {
+    fun <R : Any> map(transform: ((T) -> R)): EventStream<R> {
         return EventStream<R>(this.observable.map(transform))
     }
 
@@ -56,7 +56,7 @@ class EventStream<T>(val observable: Observable<T>) {
      * the subscriber through a ComplexEvent object when
      * both EventStreams happen within a given time frame.
      */
-    fun <R> merge(stream: EventStream<R>): ComplexEvent {
+    fun <R : Any> merge(stream: EventStream<R>): ComplexEvent {
         val merged = Observable.merge(
                 this.observable.map { element -> Pair(element, 1) },
                 stream.observable.map { element -> Pair(element, 2) }
@@ -166,7 +166,7 @@ class EventStream<T>(val observable: Observable<T>) {
         return EventStream(grouped)
     }
 
-    fun <R> distinct(transform: ((T) -> R)): EventStream<R> {
+    fun <R : Any> distinct(transform: ((T) -> R)): EventStream<R> {
         return EventStream<R>(this.observable.map(transform))
     }
 
@@ -183,15 +183,15 @@ class EventStream<T>(val observable: Observable<T>) {
 
 /***** Extension functions *****/
 
-fun <T : Comparable<T>> EventStream<T>.max(): EventStream<T?> {
-    return mapAccumulator(this, { it.max() })
+fun <T : Comparable<T>> EventStream<T>.max(): EventStream<T> {
+    return mapAccumulator(this, { it.max()!! })
 }
 
-fun <T : Comparable<T>> EventStream<T>.min(): EventStream<T?> {
-    return mapAccumulator(this, { it.min() })
+fun <T : Comparable<T>> EventStream<T>.min(): EventStream<T> {
+    return mapAccumulator(this, { it.min()!! })
 }
 
-fun <T : Comparable<T>> EventStream<T>.sumBy(selector: (T) -> Int): EventStream<NumericEvent<Number>?> {
+fun <T : Comparable<T>> EventStream<T>.sumBy(selector: (T) -> Int): EventStream<NumericEvent<Number>> {
     return this.mapAccumulator(this, { NumericEvent(it.sumBy(selector)) })
 }
 
@@ -206,7 +206,7 @@ fun <T : Number> EventStream<out NumericEvent<T>>.sum(): EventStream<NumericEven
     return EventStream(sum)
 }
 
-fun <T> EventStream<T>.count(): EventStream<NumericEvent<Int>> {
+fun <T : Any> EventStream<T>.count(): EventStream<NumericEvent<Int>> {
     val count: Observable<NumericEvent<Int>> = this.observable
             .scan(0,
                     { accumulated, _ ->
@@ -351,7 +351,7 @@ private fun <T : Number> computeVariance(list: List<NumericEvent<T>>): Double {
     return (sumSq - (sum * sum) / n) / n
 }
 
-private fun <T, R> EventStream<T>.mapAccumulator(eventStream: EventStream<T>, function: (List<T>) -> R?): EventStream<R?> {
+private fun <T : Any, R : Any> EventStream<T>.mapAccumulator(eventStream: EventStream<T>, function: (List<T>) -> R): EventStream<R> {
     val min = eventStream.accumulator().observable
             .filter { it.size > 0 }
             .map { function(it) }

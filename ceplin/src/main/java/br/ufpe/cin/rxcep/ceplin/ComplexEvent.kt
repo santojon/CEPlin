@@ -3,7 +3,7 @@ package br.ufpe.cin.rxcep.ceplin
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
-class ComplexEvent(val observable: Observable<Pair<Any?, Int>>,
+class ComplexEvent(val observable: Observable<Pair<Any, Int>>,
                    val numberOfEvents: Int,
                    val timespan: Long = 5,
                    val timeUnit: TimeUnit = TimeUnit.SECONDS) {
@@ -25,7 +25,7 @@ class ComplexEvent(val observable: Observable<Pair<Any?, Int>>,
                 }
     }
 
-    fun <E> merge(eventStream: EventStream<E>): ComplexEvent {
+    fun <E : Any> merge(eventStream: EventStream<E>): ComplexEvent {
         val merged = Observable.merge(
                 this.observable,
                 eventStream.observable.map { element -> Pair(element, numberOfEvents + 1) }
