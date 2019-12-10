@@ -58,6 +58,7 @@ ext {
     libraryDescription = 'Complex Event Processing Framework for Kotlin'
     siteUrl = 'https://github.com/santojon/CEPlin'
     gitUrl = 'https://github.com/santojon/CEPlin.git'
+    releaseDate = new Date()
     libraryVersion = '0.0.1'
     developerId = 'rxcep'
     developerName = 'Jonathan Gomes dos Santos'
